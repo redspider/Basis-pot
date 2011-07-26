@@ -6,7 +6,7 @@
 
 [Pyramid](http://pylonsproject.org/) represents the latest and arguably best python web application foundation, for the purposes of being modified to fit our needs.
 
-While other frameworks such as Django offer a code base that has been stable for longer, modifying it to match the remainder of the requirements would
+While other frameworks such as [Django](https://www.djangoproject.com/) offer a code base that has been stable for longer, modifying it to match the remainder of the requirements would
 involve significantly more work and lead us even further from the core.
 
 ### RDBMS: PostgreSQL
@@ -73,7 +73,7 @@ or [lighttpd](http://www.lighttpd.net/) but neither offer compelling features we
 
 ## Modifications to Pyramid
 
-As yet it has not been necessary to modify pyramid itself, although that may yet come given the need to capture trackback
+As yet it has not been necessary to modify pyramid itself, although that may yet come given the need to capture traceback
 information in the event of an error. The following non-standard components have been introduced:
 
 ### Modified Model
@@ -115,7 +115,7 @@ a store is necessary.
 
 While Pyramid offers its own Session and Authentication systems, we have chosen to implement our own. Ours offers a small
 number of moderate benefits, primarily focused on security. This is not to imply that the existing pyramid offerings are
-insecure, merely that ours attempts to follow the OWASP guidelines more closely. Our session is more properly titled an
+insecure, merely that ours attempts to follow the [OWASP guidelines](https://www.owasp.org/index.php/Session_Management) more closely. Our session is more properly titled an
 "Identity Session". It is not designed for temporary storage of data, but for session-length storage of identity
 credentials.
 
@@ -196,7 +196,7 @@ licensing). Log analysis at the system level isn't that common at this point how
 
 ### Application log tracking
 
-Custom work built on top of MongoDB/0MQ. The existing offerings such as Errormator offer a more robust product than we
+Custom work built on top of MongoDB/0MQ. The existing offerings such as [Errormator](https://errormator.com/) offer a more robust product than we
 will be able to produce initially given other priorities, however the sheer volume of data we intend to track and the
 need to deal with analysis of it rather than simply identifying and tracking exceptions does not appear to be served
 by anyone at this time.
@@ -215,4 +215,12 @@ by anyone at this time.
 *  Paypal. FUUUUUUUUUUUUUU
 
 Retarded location policies by payment providers are extremely frustrating.
+
+### Email delivery services
+
+At this time we're looking at using [Postmark](http://postmarkapp.com/) however previous experience with it has been disappointing,
+the delivery times were several minutes and this made it less than useful for notification-style email. Anything that adds that
+ kind of latency into an email verification transaction for example is directly getting in the way of a signup.
+
+It seems likely we'll replace it with something else if the delays remain.
 

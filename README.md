@@ -152,10 +152,36 @@ other user on the system in order to perform investigations or support.
 
 ### Event log
 
-Again a benefit of having a guarranteed NoSQL store available, the event log system allows us to record everything, in
+Again a benefit of having a guaranteed NoSQL store available, the event log system allows us to record everything, in
 great detail, to MongoDB for trend tracking, alerting, and realtime delivery to admin clients. The event log offers
 both the standard warn()/debug() etc as well as automatically storing the request and response headers of every request.
 
 The event log accepts a dictionary, not a string, and the dictionary is pushed all the way through to MongoDB, allowing
 for smart queries against, for example, a given session ID.
 
+### Validation
+
+With the general understanding that validation is to occur client-side, validation for this system becomes a simpler
+(and therefore more secure) operation. There is no need to feed back precisely what went wrong, only to fail to
+accept invalid data. The validate lib begins this process by introducing wrapper functions that pass the data through
+if it is acceptable, or raise an exception otherwise.
+
+This mode of expression:
+
+```
+username = validate.username(request.POST['username'])
+```
+
+Makes it easy to visually spot incoming data that has not yet been validated. Some consideration has been given to
+improving this interface to act like this:
+
+```
+username = request.post('username',v.username)
+```
+
+thus ensuring that no inputs will be accepted without specifying a validator.
+
+Validation functions are designed to operate in a multi-layer manner relying on non-type-specific operations first if
+possible, i.e. an incoming number is checked using a regular expression first, before checking with the int() function
+in order to isolate possible bugs in the underlying python implementation of re or int(). There are limits to how well
+this can be done without being silly, but we try.

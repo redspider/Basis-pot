@@ -89,6 +89,9 @@ Options include:
 [nginx](http://nginx.org/en/) remains our preferred option as the front-end connection handler. Alternatives could plausibly be [varnish](https://www.varnish-cache.org/)
 or [lighttpd](http://www.lighttpd.net/) but neither offer compelling features we don't already have.
 
+### Testing: Open position
+
+Heavy javascript component makes this tricky.
 
 ## Modifications to Pyramid
 

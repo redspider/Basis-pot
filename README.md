@@ -210,8 +210,9 @@ by anyone at this time.
 ### Payments provider, In+Out
 
 *  [Amazon FPS](http://aws.amazon.com/fps/). Rejected: US Only (User agreement 2.2.1, 6.2)
-*  [Google Checkout](https://checkout.google.com/support/sell/bin/answer.py?answer=134420). Rejected: US+UK Only, no payout
-*  [Braintree](http://www.braintreepayments.com/gateway). Rejected: US Only, no payout
+*  [Google Checkout](https://checkout.google.com/support/sell/bin/answer.py?answer=134420). Rejected: US+UK Only, no pay out
+*  [Braintree](http://www.braintreepayments.com/gateway). Rejected: US Only, no pay out
+*  [PaymentExpress](http://www.paymentexpress.com/index.html). Standard merchant gateway. No pay out.
 *  [MoneyBookers](http://www.moneybookers.com/app/). Uncertain. Few if any of our target audience have MB accounts. That said, it's not hard to sign up..
 *  Paypal. FUUUUUUUUUUUUUU
 
@@ -225,3 +226,10 @@ the delivery times were several minutes and this made it less than useful for no
 
 It seems likely we'll replace it with something else if the delays remain.
 
+### Version control
+
+Well..github, natch.
+
+### Ticket management
+
+Options include Github, [JIRA](http://www.atlassian.com/software/jira/) and [YouTrack](http://www.jetbrains.com/youtrack/). 

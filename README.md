@@ -212,6 +212,7 @@ by anyone at this time.
 *  [Amazon FPS](http://aws.amazon.com/fps/). Rejected: US Only (User agreement 2.2.1, 6.2)
 *  [Google Checkout](https://checkout.google.com/support/sell/bin/answer.py?answer=134420). Rejected: US+UK Only, no payout
 *  [Braintree](http://www.braintreepayments.com/gateway). Rejected: US Only, no payout
+*  [MoneyBookers](http://www.moneybookers.com/app/). Uncertain. Few if any of our target audience have MB accounts. That said, it's not hard to sign up..
 *  Paypal. FUUUUUUUUUUUUUU
 
 Retarded location policies by payment providers are extremely frustrating.

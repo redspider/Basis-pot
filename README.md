@@ -177,3 +177,40 @@ Validation functions are designed to operate in a multi-layer manner relying on 
 possible, i.e. an incoming number is checked using a regular expression first, before checking with the int() function
 in order to isolate possible bugs in the underlying python implementation of re or int(). There are limits to how well
 this can be done without being silly, but we try.
+
+## Systems, management
+
+### System configuration
+
+Puppet. Chef is the other option but we already have rulesets for puppet so we'll stick with that.
+
+### System Monitoring
+
+ServerDensity at this point, possibly with Pingdom for simple uptime presence. Not a lot of visibility into good alternatives.
+
+### System log tracking
+
+System logs will be fed into Loggly. While loggly, papertrail etc are nice, none
+of them have matured sufficiently to truly build intelligence out of the logs (unlike, say, Splunk, which simply has abysmal
+licensing). Log analysis at the system level isn't that common at this point however.
+
+### Application log tracking
+
+Custom work built on top of MongoDB/0MQ. The existing offerings such as Errormator offer a more robust product than we
+will be able to produce initially given other priorities, however the sheer volume of data we intend to track and the
+need to deal with analysis of it rather than simply identifying and tracking exceptions does not appear to be served
+by anyone at this time.
+
+## Services
+
+### Hosting provider
+
+Rackspace remains the winner here at low levels of scale.
+
+### Payments provider, In+Out
+
+*  <strike>Amazon Payments</strike> US Only
+*  <strike>Google Checkout</strike> US Only, no payout
+*  <strike>Braintree</strike> US Only, no payout
+*  Paypay. FUUUUUUUUUUUUUU
+

@@ -76,9 +76,86 @@ Contenders: Backbone, SammyJS, Custom
 ### Front-end web connection management: nginx
 
 nginx remains our preferred option as the front-end connection handler. Alternatives could plausibly be varnish
-or lighthttp but neither offer compelling features we don't already have.
+or lighttpd but neither offer compelling features we don't already have.
 
 
+## Modifications to Pyramid
 
+As yet it has not been necessary to modify pyramid itself, although that may yet come given the need to capture trackback
+information in the event of an error. The following non-standard components have been introduced:
 
+### Modified Model
+
+Our code cleanly separates the Model from the storage structure. The task of enforcing business rules and managing data
+storage and transmission is built into the Model itself and is completely opaque to the Views.
+
+The following reasons back up this choice:
+
+#### Clear communication of intent
+
+A method entitled user.get() does a poor job of communicating its purpose. How much of the user information should it
+retrieve? As a result we focus on creating a Model interface that communicates intent to the backend to allow it to
+make smart decisions. An example of this may be:
+
+```
+user.get_for_session(account)
+```
+
+Which allows the Model to then retrieve precisely the fields required for the purposes of being in a session, as well
+as take optimisations if it can.
+
+#### Storage-agnostic
+
+The exact structure of the database has no impact on anything outside the Model. This allows for testing of the Model
+interface only, in order to guarantee that design changes to the schema (such as the introduction of views or partitioning
+tables) don't affect the rest of the app.
+
+#### Multi-storage capable
+
+RDBMS and NoSQL each have different, somewhat overlapping strengths. By refusing to tie the Model to the structure of
+any one data store, we are free to make use of both concepts as appropriate, storing non-critical, flexible data
+ within MongoDB while keeping critical information within the reliable PostgreSQL store.
+
+In addition it allows the model to handle files, and send messages, in an intuitive way even when no interaction with
+a store is necessary.
+
+### Identity session / authentication
+
+While Pyramid offers its own Session and Authentication systems, we have chosen to implement our own. Ours offers a small
+number of moderate benefits, primarily focused on security. This is not to imply that the existing pyramid offerings are
+insecure, merely that ours attempts to follow the OWASP guidelines more closely. Our session is more properly titled an
+"Identity Session". It is not designed for temporary storage of data, but for session-length storage of identity
+credentials.
+
+In addition, the storage-tied nature of our implementation allows us to avoid some complexity.
+
+#### Group expiry
+
+Our sessions can be expired as a group based on the owning user, allowing an action such as changing a password to
+ force-logout an attacker who may have obtained a different session.
+
+#### Permissions boundaries
+
+Our sessions can be rotated when crossing permissions boundaries (sign-in, administrative access), preventing pre-auth
+compromises of the session token from carrying forward.
+
+#### One-time, keyed CSRF tokens
+
+CSRF tokens in our implementation cannot be re-used (replay attack) nor can they be used in a submission other than
+the one for which they were generated (keys). It is not clear the replay prevention brings any actual benefits.
+
+#### Actor
+
+Our implementation explicitly differentiates between the real user, and the actor. This allows the vast majority of the
+codebase to act as if the actor is the only user that matters, and admins can transition between themselves and any
+other user on the system in order to perform investigations or support.
+
+### Event log
+
+Again a benefit of having a guarranteed NoSQL store available, the event log system allows us to record everything, in
+great detail, to MongoDB for trend tracking, alerting, and realtime delivery to admin clients. The event log offers
+both the standard warn()/debug() etc as well as automatically storing the request and response headers of every request.
+
+The event log accepts a dictionary, not a string, and the dictionary is pushed all the way through to MongoDB, allowing
+for smart queries against, for example, a given session ID.
 

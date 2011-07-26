@@ -18,6 +18,10 @@ Addressing MySQL, it is fair to say any number of single missing features makes 
 
 ### NoSQL store: MongoDB
 
+A NoSQL store is used for storing a variety of data that isn't easily or usefully stored in the RDBMS. A good example
+of this is the event log, that stores an arbitrary dictionary supplied by the application on a case-by-case basis. In
+the event that the log data is lost, well..it's not that big a deal.
+
 Each of the NoSQL systems has significant overlap with the others, and some level of specialisation. Most of them are
 pretty good and could reasonably be used for our purposes. MongoDB is chosen due partly to familiarity, and partly
 because it isn't a key/value store and thus supports a couple of additional query modes that are useful for us.

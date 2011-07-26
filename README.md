@@ -14,19 +14,7 @@ involve significantly more work and lead us even further from the core.
 By far the leading open source RDBMS, PostgreSQL offers the primary advantages of both powerful constructs (WINDOW functions etc), and
 highly reliable constraints and transactions. There are no real non-commercial competitors in this area.
 
-Addressing MySQL, it is fair to say any number of single missing features makes it unsuitable for our purposes, however
-the simplest case is that:
-
-```
-CREATE TABLE foo (
-    bar INT NOT NULL
-);
-
-INSERT INTO foo (bar) VALUES (NULL);
-```
-
-Does not raise an exception or otherwise fail to complete the commit, it simply converts the NULL into 0. This is so
-mind-bogglingly incorrect as to leave me terrified about what other bizarre things it might do with my data.
+Addressing MySQL, it is fair to say any number of single missing features makes it unsuitable for our purposes.
 
 ### NoSQL store: MongoDB
 

@@ -61,9 +61,28 @@ result the last mile will be served by a low-complexity Node.JS instance accepti
 
 Contenders [SASS](http://sass-lang.com/) with [Compass](http://compass-style.org/), vs [LessCSS](http://lesscss.org/)
 
+### Javascript libraries: [jQuery](http://jquery.com/), [Sugar](http://sugarjs.com/), possibly [TameJS](http://tamejs.org/)
+
+Not sold on TameJS yet. Breaking the exception mechanisms and generally making tracebacks harder to understand is not
+a laudable goal. That said, it does help deal with ZOMGCALLBACKS.
+
 ### Javascript state: Open position
 
 Contenders: [Backbone](http://documentcloud.github.com/backbone/), [SammyJS](http://sammyjs.org/), Custom
+
+### UI Assist
+
+* [Chosen](http://harvesthq.github.com/chosen/) provides handy select improvements
+* [Formalize](http://formalize.me/) provides a normalised form environment
+* [Flexie](https://github.com/doctyper/flexie#readme) patches box support into non-box browsers
+* [HeadJS](http://headjs.com/) javascript loader and some basic modernizer/detection support
+
+### Graphics/Charting
+
+Options include:
+
+* [d3.js](http://mbostock.github.com/d3/)
+* [processingjs](http://processingjs.org/)
 
 ### Front-end web connection management: nginx
 

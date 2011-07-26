@@ -4,14 +4,14 @@
 
 ### Request service: Pyramid
 
-Pyramid represents the latest and arguably best python web application foundation, for the purposes of being modified to fit our needs.
+[Pyramid](http://pylonsproject.org/) represents the latest and arguably best python web application foundation, for the purposes of being modified to fit our needs.
 
-While other frameworks such as Django offer a codebase that has been stable for longer, modifying it to match the remainder of the requirements would
+While other frameworks such as Django offer a code base that has been stable for longer, modifying it to match the remainder of the requirements would
 involve significantly more work and lead us even further from the core.
 
 ### RDBMS: PostgreSQL
 
-By far the leading open source RDBMS, PostgreSQL offers the primary advantages of both powerful constructs (WINDOW functions etc), and
+By far the leading open source RDBMS, [PostgreSQL](http://www.postgresql.org/) offers the primary advantages of both powerful constructs (WINDOW functions etc), and
 highly reliable constraints and transactions. There are no real non-commercial competitors in this area.
 
 Addressing MySQL, it is fair to say any number of single missing features makes it unsuitable for our purposes.
@@ -23,16 +23,16 @@ of this is the event log, that stores an arbitrary dictionary supplied by the ap
 the event that the log data is lost, well..it's not that big a deal.
 
 Each of the NoSQL systems has significant overlap with the others, and some level of specialisation. Most of them are
-pretty good and could reasonably be used for our purposes. MongoDB is chosen due partly to familiarity, and partly
+pretty good and could reasonably be used for our purposes. [MongoDB](http://www.mongodb.org/) is chosen due partly to familiarity, and partly
 because it isn't a key/value store and thus supports a couple of additional query modes that are useful for us.
 
-Redis is the strongest competitor for this position and would probably be equally capable, with the caveat that it
+[Redis](http://redis.io/) is the strongest competitor for this position and would probably be equally capable, with the caveat that it
 is more about k/v storage. One possible reason why we may change this decision is that Redis offers PUB/SUB and queue
 operators that could plausibly be used to remove the need for 0MQ.
 
 ### Messaging: 0MQ
 
-A tightly contested position, the backend communications loop was a close tie between Redis, 0MQ and RabbitMQ. Indeed
+A tightly contested position, the backend communications loop was a close tie between Redis, [0MQ](http://www.zeromq.org/) and [RabbitMQ](http://www.rabbitmq.com/). Indeed
 Rabbit had been decided upon, but discussion with someone who had been using most of the solutions in production
 convinced me to switch to 0MQ. The fundamental issue is that Rabbit represents a complex solution, and it becomes
 difficult to diagnose in the event of weird failure, which apparently is just not all that uncommon (it's not Rabbit itself,
@@ -46,29 +46,29 @@ Rabbit provides them.
 
 Jumping the last mile to communicate in realtime back to the browser is tricky. A number of mature concepts such as long-poll
 perform this task in a rather inefficient way, but reliable support for these has proven to be fairly limited. Our
- options were reduced to Socket.IO, Orbited and nginx http-longpoll.
+ options were reduced to [Socket.IO](http://socket.io/), [Orbited](http://www.orbited.org/) and [nginx http-push](http://pushmodule.slact.net/).
 
-Of these, orbited was rejected because it does not support the particular addressing mode we wanted, and http-longpoll
+Of these, orbited was rejected because it does not support the particular addressing mode we wanted, and http-push
 was rejected after checking with others indicated it was both unmaintained and had a memory leak that necessitated restarts
 of the nginx process after some time. Socket.IO therefore was more of a win-by-default than because it was an outstanding
 option.
 
-Prior experience has demonstrated that there is only one reliable Socket.IO server implementation, the one in Node.JS.
+Prior experience has demonstrated that there is only one reliable Socket.IO server implementation, the one in [Node.JS](http://nodejs.org/).
 Others, such as the various python endpoints, had odd corner-case bugs that led to problems in production use. As a
 result the last mile will be served by a low-complexity Node.JS instance accepting messages for 0MQ.
 
 ### CSS construction: Open position
 
-Contenders SCSS with Compass, vs LessCSS
+Contenders [SASS](http://sass-lang.com/) with [Compass](http://compass-style.org/), vs [LessCSS](http://lesscss.org/)
 
 ### Javascript state: Open position
 
-Contenders: Backbone, SammyJS, Custom
+Contenders: [Backbone](http://documentcloud.github.com/backbone/), [SammyJS](http://sammyjs.org/), Custom
 
 ### Front-end web connection management: nginx
 
-nginx remains our preferred option as the front-end connection handler. Alternatives could plausibly be varnish
-or lighttpd but neither offer compelling features we don't already have.
+[nginx](http://nginx.org/en/) remains our preferred option as the front-end connection handler. Alternatives could plausibly be [varnish](https://www.varnish-cache.org/)
+or [lighttpd](http://www.lighttpd.net/) but neither offer compelling features we don't already have.
 
 
 ## Modifications to Pyramid
@@ -182,16 +182,16 @@ this can be done without being silly, but we try.
 
 ### System configuration
 
-Puppet. Chef is the other option but we already have rulesets for puppet so we'll stick with that.
+[Puppet](http://www.puppetlabs.com/). [Chef](http://wiki.opscode.com/display/chef/Home) is the other option but we already have rulesets for puppet so we'll stick with that.
 
 ### System Monitoring
 
-ServerDensity at this point, possibly with Pingdom for simple uptime presence. Not a lot of visibility into good alternatives.
+[ServerDensity](http://www.serverdensity.com/) at this point, possibly with [Pingdom](http://www.pingdom.com/) for simple uptime presence. Not a lot of visibility into good alternatives. ServerDensity is particularly weak on PostgreSQL monitoring which is a shame, strong on MongoDB though.
 
 ### System log tracking
 
-System logs will be fed into Loggly. While loggly, papertrail etc are nice, none
-of them have matured sufficiently to truly build intelligence out of the logs (unlike, say, Splunk, which simply has abysmal
+System logs will be fed into [Loggly](http://loggly.com/). While Loggly, [Papertrail](https://papertrailapp.com/) etc are nice, none
+of them have matured sufficiently to truly build intelligence out of the logs (unlike, say, [Splunk](http://www.splunk.com/), which simply has abysmal
 licensing). Log analysis at the system level isn't that common at this point however.
 
 ### Application log tracking
@@ -205,12 +205,14 @@ by anyone at this time.
 
 ### Hosting provider
 
-Rackspace remains the winner here at low levels of scale.
+[Rackspace](http://www.rackspace.com/cloud/) remains the winner here at low levels of scale. Evolution from there is probably Amazon.
 
 ### Payments provider, In+Out
 
-*  <strike>Amazon Payments</strike> US Only
-*  <strike>Google Checkout</strike> US Only, no payout
-*  <strike>Braintree</strike> US Only, no payout
-*  Paypay. FUUUUUUUUUUUUUU
+*  [Amazon FPS](http://aws.amazon.com/fps/). Rejected: US Only (User agreement 2.2.1, 6.2)
+*  [Google Checkout](https://checkout.google.com/support/sell/bin/answer.py?answer=134420). Rejected: US+UK Only, no payout
+*  [Braintree](http://www.braintreepayments.com/gateway). Rejected: US Only, no payout
+*  Paypal. FUUUUUUUUUUUUUU
+
+Retarded location policies by payment providers are extremely frustrating.
 
